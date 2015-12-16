@@ -1,15 +1,18 @@
 #include "ofApp.h"
 int bgColor = 255;
+int timer = 0;  //タイマー
 
 Boolean incMode = false;
+Boolean isPlaying;
+Boolean isMove;
 
+ofSoundPlayer sound;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
     // Limit drawing to a sane rate
     ofSetVerticalSync(true);
     ofSetFrameRate(30);
-    
     
     receiver.setup(PORT);
     
@@ -53,6 +56,11 @@ void ofApp::setup(){
     player8.play();
     player9.play();
     player10.play();
+    
+    sound.setLoop(true);
+    sound.loadSound("meganeandbob_s.mp3");
+    
+    //sound.play();
 }
 
 //--------------------------------------------------------------
@@ -72,61 +80,79 @@ void ofApp::update(){
         incMode = false;
     }
     
-    cout << player.getIsMovieDone() << endl;
     while(receiver.hasWaitingMessages()){
         ofxOscMessage m;
         receiver.getNextMessage(&m);
-        cout << m.getAddress() << endl;
-        
-            if (m.getAddress() == "/one") {
-                if (player.getIsMovieDone()) {
-                    player.setPosition(0);
-                }
-            } else if (m.getAddress() == "/two") {
-                if (player1.getIsMovieDone()) {
-                    player1.setPosition(0);
-                }
-            } else if (m.getAddress() == "/three") {
-                if (player2.getIsMovieDone()) {
-                    player2.setPosition(0);
-                }
-            } else if (m.getAddress() == "/four") {
-                if (player3.getIsMovieDone()) {
-                    player3.setPosition(0);
-                }
-            }else if (m.getAddress() == "/five") {
-                if (player4.getIsMovieDone()) {
-                    player4.setPosition(0);
-                }
-            } else if (m.getAddress() == "/six") {
-                if (player5.getIsMovieDone()) {
-                    player5.setPosition(0);
-                }
-            } else if (m.getAddress() == "/seven") {
-                if (player6.getIsMovieDone()) {
-                    player6.setPosition(0);
-                }
-            }else if (m.getAddress() == "/eight") {
-                if (player7.getIsMovieDone()) {
-                    player7.setPosition(0);
-                }
-            } else if (m.getAddress() == "/nine") {
-                if (player8.getIsMovieDone()) {
-                    player8.setPosition(0);
-                }
-            } else if (m.getAddress() == "/ten") {
-                if (player9.getIsMovieDone()) {
-                    player9.setPosition(0);
-                }
-            }else if (m.getAddress() == "/eleven") {
-                if (player10.getIsMovieDone()) {
-                    player10.setPosition(0);
-                }
+        if (m.getAddress() == "/one") {
+            if (player.getIsMovieDone()) {
+                player.setPosition(0);
             }
-        
+            isPlaying = true;
+            isMove = true;
+        } else if (m.getAddress() == "/two") {
+            if (player1.getIsMovieDone()) {
+                player1.setPosition(0);
+            }
+            isPlaying = true;
+            isMove = true;
+        } else if (m.getAddress() == "/three") {
+            if (player2.getIsMovieDone()) {
+                player2.setPosition(0);
+            }
+            isPlaying = true;
+            isMove = true;
+        } else if (m.getAddress() == "/four") {
+            if (player3.getIsMovieDone()) {
+                player3.setPosition(0);
+            }
+            isPlaying = true;
+            isMove = true;
+        }else if (m.getAddress() == "/five") {
+            if (player4.getIsMovieDone()) {
+                player4.setPosition(0);
+            }
+            isPlaying = true;
+            isMove = true;
+        } else if (m.getAddress() == "/six") {
+            if (player5.getIsMovieDone()) {
+                player5.setPosition(0);
+            }
+            isPlaying = true;
+            isMove = true;
+        } else if (m.getAddress() == "/seven") {
+            if (player6.getIsMovieDone()) {
+                player6.setPosition(0);
+            }
+            isPlaying = true;
+            isMove = true;
+        }else if (m.getAddress() == "/eight") {
+            if (player7.getIsMovieDone()) {
+                player7.setPosition(0);
+            }
+            isPlaying = true;
+            isMove = true;
+        } else if (m.getAddress() == "/nine") {
+            if (player8.getIsMovieDone()) {
+                player8.setPosition(0);
+            }
+            isPlaying = true;
+            isMove = true;
+        } else if (m.getAddress() == "/ten") {
+            if (player9.getIsMovieDone()) {
+                player9.setPosition(0);
+            }
+            isPlaying = true;
+            isMove = true;
+        }else if (m.getAddress() == "/eleven") {
+            if (player10.getIsMovieDone()) {
+                player10.setPosition(0);
+            }
+            isPlaying = true;
+            isMove = true;
+        }
     }
     
-    
+    ofSoundUpdate();
     
     // Signal the player to update
     player.update();
@@ -141,11 +167,26 @@ void ofApp::update(){
     player9.update();
     player10.update();
     
+    if (!isMove) {
+        timer++;
+    } else {
+        timer = 0;
+    }
+    
+    cout << timer << endl;
+    if(timer > (15 * 30)){
+        cout << "Stop" << endl;
+        timer = 0;
+        sound.stop();
+        sound.unloadSound();
+        sound.loadSound("meganeandbob_s.mp3");
+        isPlaying = false;
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
+
     // Draw the frame
     ofSetColor(255, 255, 255);
     player.draw(0,  0, ofGetWidth(), ofGetHeight());
@@ -162,77 +203,136 @@ void ofApp::draw(){
     
     // Draw the FPS display
     ofSetColor(20,20,20);
-    //ofDrawBitmapString(ofToString(ofGetFrameRate(), 0) + " FPS", 20, 20);
+    
+    isMove = false;
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if (key == '0') {
-        
         if (player.getIsMovieDone()) {
             player.setPosition(0);
         }
+        
+        if (!isPlaying){
+            sound.play();
+            isPlaying = true;
+        }
+        isMove = true;
     }
     
     if (key == '1') {
         if (player1.getIsMovieDone()) {
             player1.setPosition(0);
         }
+        if (!isPlaying){
+            sound.play();
+            isPlaying = true;
+        }
+        isMove = true;
     }
     
     if (key == '2') {
         if (player2.getIsMovieDone()) {
             player2.setPosition(0);
         }
+        if (!isPlaying){
+            sound.play();
+            isPlaying = true;
+        }
+        isMove = true;
     }
     
     if (key == '3') {
         if (player3.getIsMovieDone()) {
             player3.setPosition(0);
         }
+        if (!isPlaying){
+            sound.play();
+            isPlaying = true;
+        }
+        isMove = true;
         
     }
     if (key == '4') {
         if (player4.getIsMovieDone()) {
             player4.setPosition(0);
         }
+        if (!isPlaying){
+            sound.play();
+            isPlaying = true;
+        }
+        isMove = true;
     }
     
     if (key == '5') {
         if (player5.getIsMovieDone()) {
             player5.setPosition(0);
         }
+        if (!isPlaying){
+            sound.play();
+            isPlaying = true;
+        }
+        isMove = true;
     }
     
     if (key == '6') {
         if (player6.getIsMovieDone()) {
             player6.setPosition(0);
         }
+        if (!isPlaying){
+            sound.play();
+            isPlaying = true;
+        }
+        isMove = true;
     }
     
     if (key == '7') {
         if (player7.getIsMovieDone()) {
             player7.setPosition(0);
         }
+        if (!isPlaying){
+            sound.play();
+            isPlaying = true;
+            
+        }
+        isMove = true;
     }
     if (key == '8') {
         if (player8.getIsMovieDone()) {
             player8.setPosition(0);
         }
+        if (!isPlaying){
+            sound.play();
+            isPlaying = true;
+            
+        }
+        isMove = true;
     }
     
     if (key == '9') {
         if (player9.getIsMovieDone()) {
             player9.setPosition(0);
         }
+        if (!isPlaying){
+            sound.play();
+            isPlaying = true;
+            
+        }
+        isMove = true;
     }
     
     if (key == 'q') {
         if (player10.getIsMovieDone()) {
             player10.setPosition(0);
         }
+        if (!isPlaying){
+            sound.play();
+            isPlaying = true;
+            
+        }
+        isMove = true;
     }
-    
 }
 
 //--------------------------------------------------------------
