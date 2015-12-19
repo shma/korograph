@@ -87,67 +87,111 @@ void ofApp::update(){
             if (player.getIsMovieDone()) {
                 player.setPosition(0);
             }
-            isPlaying = true;
+            
+            if (!isPlaying){
+                sound.play();
+                isPlaying = true;
+            }
             isMove = true;
         } else if (m.getAddress() == "/two") {
             if (player1.getIsMovieDone()) {
                 player1.setPosition(0);
             }
-            isPlaying = true;
+            
+            if (!isPlaying){
+                sound.play();
+                isPlaying = true;
+            }
             isMove = true;
         } else if (m.getAddress() == "/three") {
             if (player2.getIsMovieDone()) {
                 player2.setPosition(0);
             }
-            isPlaying = true;
+            
+            if (!isPlaying){
+                sound.play();
+                isPlaying = true;
+            }
             isMove = true;
         } else if (m.getAddress() == "/four") {
             if (player3.getIsMovieDone()) {
                 player3.setPosition(0);
             }
-            isPlaying = true;
+            
+            if (!isPlaying){
+                sound.play();
+                isPlaying = true;
+            }
             isMove = true;
         }else if (m.getAddress() == "/five") {
             if (player4.getIsMovieDone()) {
                 player4.setPosition(0);
             }
-            isPlaying = true;
+            
+            if (!isPlaying){
+                sound.play();
+                isPlaying = true;
+            }
             isMove = true;
         } else if (m.getAddress() == "/six") {
             if (player5.getIsMovieDone()) {
                 player5.setPosition(0);
             }
-            isPlaying = true;
+            
+            if (!isPlaying){
+                sound.play();
+                isPlaying = true;
+            }
             isMove = true;
         } else if (m.getAddress() == "/seven") {
             if (player6.getIsMovieDone()) {
                 player6.setPosition(0);
             }
-            isPlaying = true;
+            
+            if (!isPlaying){
+                sound.play();
+                isPlaying = true;
+            }
             isMove = true;
         }else if (m.getAddress() == "/eight") {
             if (player7.getIsMovieDone()) {
                 player7.setPosition(0);
             }
-            isPlaying = true;
+            
+            if (!isPlaying){
+                sound.play();
+                isPlaying = true;
+            }
             isMove = true;
         } else if (m.getAddress() == "/nine") {
             if (player8.getIsMovieDone()) {
                 player8.setPosition(0);
             }
-            isPlaying = true;
+            
+            if (!isPlaying){
+                sound.play();
+                isPlaying = true;
+            }
             isMove = true;
         } else if (m.getAddress() == "/ten") {
             if (player9.getIsMovieDone()) {
                 player9.setPosition(0);
             }
-            isPlaying = true;
+            
+            if (!isPlaying){
+                sound.play();
+                isPlaying = true;
+            }
             isMove = true;
         }else if (m.getAddress() == "/eleven") {
             if (player10.getIsMovieDone()) {
                 player10.setPosition(0);
             }
-            isPlaying = true;
+            
+            if (!isPlaying){
+                sound.play();
+                isPlaying = true;
+            }
             isMove = true;
         }
     }
